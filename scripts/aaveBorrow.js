@@ -22,6 +22,15 @@ async function main() {
     const amountDaiToBorrowWei = ethers.utils.parseEther(amountDaiToBorrow.toString())
     // Borrow Time!
     // how much we have borrowed, how much we have in collateral
+    const daiTokenAddress = "0x6B175474E89094C44Da98b954EedeAC495271d0F"
+    await borrowDai(daiTokenAddress, lendingPool, amountDaiToBorrowWei, deployer)
+    await getBorrowUserData(lendingPool, deployer)
+}
+
+async function borrowDai(daiAddress, lendingPool, amountDaiToBorrowWei, account) {
+    const borrowTx = await lendingPool.borrow(daiAddress, amountDaiToBorrowWei, 1, 0, account)
+    await borrowTx.wait(1)
+    console.log("You've borrowed!")
 }
 
 async function getDAIPrice() {
